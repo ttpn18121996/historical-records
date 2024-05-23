@@ -1,0 +1,37 @@
+{
+    "name": "ttpn18121996/historical-records",
+    "description": "Record the history of activities affecting the database in a simple way.",
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "illuminate/collections": "^11.0",
+        "illuminate/console": "^11.0",
+        "illuminate/contracts": "^11.0",
+        "illuminate/database": "^11.0",
+        "illuminate/support": "^11.0",
+        "illuminate/log": "^11.0"
+    },
+    "require-dev": {
+        "laravel/pint": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "HistoricalRecords\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HistoricalRecords\\HistoricalRecordsServiceProvider"
+            ]
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Trinh Tran Phuong Nam",
+            "email": "ttpn18121996@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
