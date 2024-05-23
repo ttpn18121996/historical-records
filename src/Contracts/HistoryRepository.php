@@ -8,9 +8,10 @@ interface HistoryRepository
      * Create history of user actions that affect the database.
      *
      * @param  mixed  $userId
-     * @param  string  $table
+     * @param  string  $tableName
      * @param  string  $keyword
-     * @param  array  $payload
+     * @param  array|null  $payload
+     * @return \HistoricalRecords\Models\History
      */
-    public function saveHistory($userId, string $table, string $keyword, array $payload = []);
+    public function saveHistory($userId, string $tableName, string $keyword, ?array $payload = null);
 }
