@@ -8,11 +8,11 @@ return [
         ],
         'update' => [
             'title' => 'Update',
-            'action' => '%s has update a user.',
+            'action' => '%s has updated a user.',
         ],
         'delete' => [
             'title' => 'Delete',
-            'action' => '%s has delete a user.',
+            'action' => '%s has deleted a user.',
         ],
         'destroy' => [
             'title' => 'Force delete',

@@ -17,13 +17,9 @@ class HistoryRepository implements HistoryRepositoryContract
     /**
      * Create history of user actions that affect the database.
      *
-     * @param  mixed  $userId
-     * @param  string  $tableName
-     * @param  string  $keyword
-     * @param  array|null  $payload
      * @return \HistoricalRecords\Models\History
      */
-    public function saveHistory($userId, string $tableName, string $keyword, ?array $payload = null)
+    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null)
     {
         $browser = Container::getInstance()->make('browser-detect')->detect();
 
@@ -44,22 +40,13 @@ class HistoryRepository implements HistoryRepositoryContract
             'platform_version' => $browser->platformVersion(),
         ];
 
-        return [
+        return $this->history->create([
             'user_id' => $userId,
             'table' => $tableName,
             'keyword' => $keyword,
             'payload' => $payload,
             'information' => json_encode($information),
             'ip_address' => Request::ip(),
-        ];
-
-        // return $this->history->create([
-        //     'user_id' => $userId,
-        //     'table' => $table,
-        //     'keyword' => $keyword,
-        //     'payload' => $payload,
-        //     'information' => json_encode($information),
-        //     'ip_address' => Request::ip(),
-        // ]);
+        ]);
     }
 }

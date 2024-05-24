@@ -3,7 +3,6 @@
 namespace HistoricalRecords;
 
 use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
-use HistoricalRecords\HistoryRepository;
 use Illuminate\Support\ServiceProvider;
 
 class HistoricalRecordsServiceProvider extends ServiceProvider
@@ -11,7 +10,7 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(HistoryRepositoryContract::class, HistoryRepository::class);
 
@@ -29,26 +28,22 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
 
     /**
      * Register the package's publishable resources.
-     *
-     * @return void
      */
-    protected function registerPublishing()
+    protected function registerPublishing(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../database/migrations' => database_path('migrations'),
-                __DIR__.'/../config/historical-records.php' => config_path('historical-records.php'),
-                __DIR__.'/../stubs/en' => base_path('lang/en'),
+                __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
+                __DIR__.'/../config/historical-records.php' => $this->app->configPath('historical-records.php'),
+                __DIR__.'/../stubs/en' => $this->app->basePath('lang/en'),
             ], 'historical-records');
         }
     }
 
     /**
      * Register the Passport Artisan commands.
-     *
-     * @return void
      */
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([

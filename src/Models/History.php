@@ -3,6 +3,7 @@
 namespace HistoricalRecords\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Config;
 
 class History extends Model
 {
+    use HasFactory;
+    
     protected $fillable = ['user_id', 'table_name', 'keyword', 'payload', 'information', 'ip_address', 'created_at'];
 
     public $timestamps = false;
@@ -43,6 +46,20 @@ class History extends Model
     {
         return Attribute::make(
             get: fn () => (! is_null($this->information) ? json_decode($this->information, true) : []),
+        );
+    }
+
+    /**
+     * Get the action content to display for humans.
+     */
+    public function actionForHuman(): Attribute
+    {
+        $translator = Container::getInstance()->make('translator');
+
+        return Attribute::make(
+            get: fn () => sprintf($translator->get(
+                'history.'.$this->table_name.'.'.$this->keyword.'.action',
+            ), $this->user->name),
         );
     }
 
