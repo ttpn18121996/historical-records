@@ -42,7 +42,7 @@ class HistoryRepository implements HistoryRepositoryContract
 
         return $this->history->create([
             'user_id' => $userId,
-            'table' => $tableName,
+            'table_name' => $tableName,
             'keyword' => $keyword,
             'payload' => $payload,
             'information' => json_encode($information),

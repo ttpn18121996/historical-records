@@ -2,8 +2,10 @@
 
 namespace HistoricalRecords\Tests;
 
+use hisorange\BrowserDetect\ServiceProvider as BrowserDetectServiceProvider;
 use HistoricalRecords\HistoricalRecordsServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
+use function Orchestra\Testbench\artisan;
 
 class TestCase extends \Orchestra\Testbench\TestCase 
 {
@@ -14,6 +16,17 @@ class TestCase extends \Orchestra\Testbench\TestCase
         }
 
         parent::setUp();
+    }
+
+    /**
+     * Define database migrations.
+     *
+     * @return void
+     */
+    protected function defineDatabaseMigrations()
+    {
+        artisan($this, 'migrate');
+        $this->loadMigrationsFrom(__DIR__.'/../workbench/database/migrations');
     }
 
     /**
@@ -36,6 +49,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getPackageProviders($app)
     {
-        return [HistoricalRecordsServiceProvider::class];
+        return [
+            BrowserDetectServiceProvider::class,
+            HistoricalRecordsServiceProvider::class,
+        ];
     }
 }

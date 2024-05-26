@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-class User extends Illuminate\Foundation\Auth\User
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class User extends \Illuminate\Foundation\Auth\User
 {
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
