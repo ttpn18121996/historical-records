@@ -1,11 +1,11 @@
 name: Check code format
 
 on:
-  pull_request:
-    branches-ignore:
+  push:
+    branches:
       - 'master'
-      - 'main'
-      - 'releases/**'
+      - '*.x'
+  pull_request:
 
 jobs:
   check_code_formatting:

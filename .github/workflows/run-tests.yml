@@ -1,11 +1,11 @@
 name: Run Tests
 
 on:
-  pull_request:
+  push:
     branches:
       - 'master'
-      - 'main'
-      - 'releases/**'
+      - '*.x'
+  pull_request:
 
 jobs:
   test_features:
