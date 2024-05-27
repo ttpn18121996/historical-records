@@ -2,6 +2,7 @@
 
 namespace HistoricalRecords\Models;
 
+use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Config;
 class History extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = ['user_id', 'table_name', 'keyword', 'payload', 'information', 'ip_address', 'created_at'];
 
     public $timestamps = false;
@@ -22,7 +23,8 @@ class History extends Model
      */
     public function user(): BelongsTo
     {
-        $provider = $this->provider ?: Config::get('auth.guards.api.provider');
+        $guard = Config::get('auth.defaults.guard');
+        $provider = $this->provider ?: Config::get("auth.guards.{$guard}.provider");
 
         return $this->belongsTo(
             Config::get("auth.providers.{$provider}.model"),

@@ -2,9 +2,11 @@
 
 namespace HistoricalRecords;
 
+use App\Models\User;
 use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
 use HistoricalRecords\Models\History;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 
 class HistoryRepository implements HistoryRepositoryContract
@@ -41,12 +43,25 @@ class HistoryRepository implements HistoryRepositoryContract
         ];
 
         return $this->history->create([
-            'user_id' => $userId,
-            'table' => $tableName,
+            'user_id' => $this->resolveUser($userId)->id,
+            'table_name' => $tableName,
             'keyword' => $keyword,
             'payload' => $payload,
             'information' => json_encode($information),
             'ip_address' => Request::ip(),
         ]);
+    }
+
+    public function resolveUser($userId)
+    {
+        $guard = Config::get('auth.defaults.guard');
+        $provider = Config::get("auth.guards.{$guard}.provider");
+        $userModel = Config::get("auth.providers.{$provider}.model");
+
+        if ($userId instanceof $userModel) {
+            return $userId;
+        }
+
+        return Container::getInstance()->make($userModel)->find($userId);
     }
 }
