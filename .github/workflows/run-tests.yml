@@ -30,4 +30,6 @@ jobs:
       run: cp phpunit.xml.dist phpunit.xml && cp workbench/.env.example workbench/.env && touch workbench/database/database.sqlite
 
     - name: "Run PHPUnit tests"
-      run: ./vendor/bin/phpunit
+      uses: php-actions/phpunit@v3
+      with:
+        php_extensions: "xdebug"
