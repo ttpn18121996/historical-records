@@ -1,0 +1,48 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+      - 'main'
+      - 'releases/**'
+
+jobs:
+  test_features:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Checkout the code"
+      uses: actions/checkout@v4
+
+    - name: "Setup MySQL"
+      uses: shogo82148/actions-setup-mysql@v1
+      with:
+        mysql-version: "8.2"
+        root-password: 'password'
+
+    - name: "Verify MySQL connection"
+      run: mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e "CREATE DATABASE IF NOT EXISTS testing;"
+
+    - name: "Setup PHP"
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        tools: composer:v2
+        coverage: none
+
+    - name: "Install dependencies"
+      run: composer install --prefer-dist --no-progress
+
+    - name: "Install npm dependencies"
+      run: npm ci && npm run build && rm -rf node_modules
+
+    - name: "Setup Laravel environment"
+      run: cp .env.testing.example .env.testing
+
+    - name: "Run migration"
+      run: php artisan migrate --env=testing
+
+    - name: "Run Pest tests"
+      run: ./vendor/bin/phpunit
