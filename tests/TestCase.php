@@ -2,7 +2,6 @@
 
 namespace HistoricalRecords\Tests;
 
-use App\Providers\AppServiceProvider;
 use hisorange\BrowserDetect\ServiceProvider as BrowserDetectServiceProvider;
 use HistoricalRecords\HistoricalRecordsServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
@@ -66,7 +65,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         });
 
         return [
-            AppServiceProvider::class,
             BrowserDetectServiceProvider::class,
             HistoricalRecordsServiceProvider::class,
         ];

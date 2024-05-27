@@ -2,7 +2,6 @@
 
 namespace HistoricalRecords;
 
-use App\Models\User;
 use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
 use HistoricalRecords\Models\History;
 use Illuminate\Container\Container;
