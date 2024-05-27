@@ -32,4 +32,5 @@ jobs:
     - name: "Run PHPUnit tests"
       uses: php-actions/phpunit@v3
       with:
+        php_version: 8.2
         php_extensions: "xdebug"
