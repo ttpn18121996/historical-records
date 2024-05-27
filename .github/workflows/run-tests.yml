@@ -16,15 +16,6 @@ jobs:
     - name: "Checkout the code"
       uses: actions/checkout@v4
 
-    - name: "Setup MySQL"
-      uses: shogo82148/actions-setup-mysql@v1
-      with:
-        mysql-version: "8.2"
-        root-password: 'password'
-
-    - name: "Verify MySQL connection"
-      run: mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e "CREATE DATABASE IF NOT EXISTS testing;"
-
     - name: "Setup PHP"
       uses: shivammathur/setup-php@v2
       with:
@@ -35,14 +26,8 @@ jobs:
     - name: "Install dependencies"
       run: composer install --prefer-dist --no-progress
 
-    - name: "Install npm dependencies"
-      run: npm ci && npm run build && rm -rf node_modules
+    - name: "Setup PHPUnit environment"
+      run: cp phpunit.xml.dist phpunit.xml && cp workbench/.env.example workbench/.env && touch workbench/database/database.sqlite
 
-    - name: "Setup Laravel environment"
-      run: cp .env.testing.example .env.testing
-
-    - name: "Run migration"
-      run: php artisan migrate --env=testing
-
-    - name: "Run Pest tests"
+    - name: "Run PHPUnit tests"
       run: ./vendor/bin/phpunit
