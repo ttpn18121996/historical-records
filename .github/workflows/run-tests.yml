@@ -22,6 +22,7 @@ jobs:
         php-version: '8.2'
         tools: composer:v2
         coverage: none
+        extensions: dom, curl, libxml, mbstring, zip
 
     - name: "Install dependencies"
       run: composer install --prefer-dist --no-progress
@@ -30,8 +31,4 @@ jobs:
       run: cp phpunit.xml.dist phpunit.xml && cp workbench/.env.example workbench/.env && touch workbench/database/database.sqlite
 
     - name: "Run PHPUnit tests"
-      uses: php-actions/phpunit@v3
-      with:
-        php_version: 8.3
-        php_extensions: "xdebug"
-        coverage_text: true
+      run: vendor/bin/phpunit
