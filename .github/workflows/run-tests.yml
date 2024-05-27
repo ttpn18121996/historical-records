@@ -34,4 +34,4 @@ jobs:
       with:
         php_version: 8.3
         php_extensions: "xdebug"
-        args: --coverage-text
+        coverage_text: true
