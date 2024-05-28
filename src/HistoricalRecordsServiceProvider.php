@@ -35,7 +35,7 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
                 __DIR__.'/../config/historical-records.php' => $this->app->configPath('historical-records.php'),
-                __DIR__.'/../stubs/en' => $this->app->basePath('lang/en'),
+                __DIR__.'/../lang/en' => $this->app->basePath('lang/en'),
             ], 'historical-records');
         }
     }
