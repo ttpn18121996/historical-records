@@ -19,8 +19,12 @@ class HistoryRepository implements HistoryRepositoryContract
     /**
      * Create history of user actions that affect the database.
      */
-    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null): ?History
+    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null): mixed
     {
+        if (is_null($userId)) {
+            return null;
+        }
+
         $browser = Container::getInstance()->make('browser-detect')->detect();
 
         $device = match (true) {
