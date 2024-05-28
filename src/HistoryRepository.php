@@ -2,10 +2,10 @@
 
 namespace HistoricalRecords;
 
-use App\Models\User;
 use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
 use HistoricalRecords\Models\History;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 
@@ -18,10 +18,8 @@ class HistoryRepository implements HistoryRepositoryContract
 
     /**
      * Create history of user actions that affect the database.
-     *
-     * @return \HistoricalRecords\Models\History
      */
-    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null)
+    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null): ?History
     {
         $browser = Container::getInstance()->make('browser-detect')->detect();
 
@@ -52,7 +50,20 @@ class HistoryRepository implements HistoryRepositoryContract
         ]);
     }
 
-    public function resolveUser($userId)
+    /**
+     * Clean up history.
+     */
+    public function cleanup(int $days = 90): void
+    {
+        Artisan::call('historical-records:cleanup', [
+            'time' => "{$days}d",
+        ]);
+    }
+
+    /**
+     * Resolve the user.
+     */
+    protected function resolveUser($userId): mixed
     {
         $guard = Config::get('auth.defaults.guard');
         $provider = Config::get("auth.guards.{$guard}.provider");

@@ -2,12 +2,17 @@
 
 namespace HistoricalRecords\Contracts;
 
+use HistoricalRecords\Models\History;
+
 interface HistoryRepository
 {
     /**
      * Create history of user actions that affect the database.
-     *
-     * @return \HistoricalRecords\Models\History
      */
-    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null);
+    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null): ?History;
+
+    /**
+     * Clean up history.
+     */
+    public function cleanup(int $days = 90): void;
 }

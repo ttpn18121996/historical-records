@@ -24,14 +24,4 @@ class RepositoryTest extends TestCase
         $this->assertEquals($history->keyword, 'create');
         $this->assertInstanceOf(History::class, $history);
     }
-
-    public function it_can_resolve_the_user_by_id()
-    {
-        $user = User::factory()->create();
-        $historyRepository = app(HistoryRepository::class);
-        $actual = $historyRepository->resolveUser($user->id);
-
-        $this->assertInstanceOf(User::class, $actual);
-        $this->assertEquals($user->id, $actual->id);
-    }
 }
