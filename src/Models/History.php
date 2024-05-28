@@ -2,7 +2,6 @@
 
 namespace HistoricalRecords\Models;
 
-use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,14 +53,20 @@ class History extends Model
     /**
      * Get the action content to display for humans.
      */
-    public function actionForHuman(): Attribute
+    public function titleForTrans(): Attribute
     {
-        $translator = Container::getInstance()->make('translator');
-
         return Attribute::make(
-            get: fn () => sprintf($translator->get(
-                'history.'.$this->table_name.'.'.$this->keyword.'.action',
-            ), $this->user->name),
+            get: fn () => 'historical.'.$this->table_name.'.'.$this->keyword.'.title',
+        );
+    }
+
+    /**
+     * Get the action content to display for humans.
+     */
+    public function actionForTrans(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => 'historical.'.$this->table_name.'.'.$this->keyword.'.action',
         );
     }
 

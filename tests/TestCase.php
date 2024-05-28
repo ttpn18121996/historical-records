@@ -5,8 +5,6 @@ namespace HistoricalRecords\Tests;
 use hisorange\BrowserDetect\ServiceProvider as BrowserDetectServiceProvider;
 use HistoricalRecords\HistoricalRecordsServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
-use Illuminate\Translation\FileLoader;
-use Illuminate\Translation\Translator;
 
 use function Orchestra\Testbench\artisan;
 
@@ -51,19 +49,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getPackageProviders($app)
     {
-        $app->singleton('translation.loader', function ($app) {
-            return new FileLoader($app['files'], [__DIR__.'/../../lang', $app['path.lang']]);
-        });
-
-        $app->singleton('translator', function ($app) {
-            $loader = $app['translation.loader'];
-
-            $trans = new Translator($loader, 'en');
-            $trans->setFallback($app->getFallbackLocale());
-
-            return $trans;
-        });
-
         return [
             BrowserDetectServiceProvider::class,
             HistoricalRecordsServiceProvider::class,

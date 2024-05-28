@@ -46,7 +46,7 @@ class ModelTest extends TestCase
         $this->assertTrue(is_array($information));
     }
 
-    public function test_it_can_get_action_for_human()
+    public function test_it_can_get_info_for_trans()
     {
         $user = User::factory()->create(['name' => 'AAA']);
         $historyRepository = app(HistoryRepository::class);
@@ -54,8 +54,10 @@ class ModelTest extends TestCase
         $newUser = User::factory()->create();
 
         $history = $historyRepository->saveHistory($user, 'users', 'create', $newUser->toArray());
-        $actionForHuman = $history->actionForHuman;
+        $actionForTrans = $history->action_for_trans;
+        $titleForTrans = $history->title_for_trans;
 
-        $this->assertTrue(is_string($actionForHuman));
+        $this->assertTrue($titleForTrans === 'historical.users.create.title');
+        $this->assertTrue($actionForTrans === 'historical.users.create.action');
     }
 }
