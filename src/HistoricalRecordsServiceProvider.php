@@ -48,6 +48,7 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\InstallCommand::class,
+                Console\HistoryCleanup::class,
             ]);
         }
     }
