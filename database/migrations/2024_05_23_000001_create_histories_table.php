@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable()->index();
             $table->string('table_name')->comment('The name of the table in database');
             $table->string('keyword')->comment('This keyword is used to display messages according to the key in the language file');
-            $table->longText('payload')->nullable();
-            $table->longText('information')
-                ->default('{"device":"Unknown"}')
+            $table->json('payload')->nullable();
+            $table->json('information')
+                ->nullable()
                 ->comment('device, browser, browser_version, platform');
             $table->ipAddress('ip_address')->default('127.0.0.1');
             $table->timestamp('created_at')->nullable();

@@ -56,7 +56,7 @@ class HistoryRepository implements HistoryRepositoryContract
     public function cleanup(int $days = 90): void
     {
         Artisan::call('historical-records:cleanup', [
-            'time' => "{$days}d",
+            '--time' => "{$days}d",
         ]);
     }
 
