@@ -59,3 +59,60 @@ class AppServiceProvider extends ServiceProvider
     }
 }
 ```
+
+## History cleanup
+
+---
+
+Run the command to delete history more than 30 days
+
+```bash
+php artisan historical-records:cleanup
+```
+
+If you want to specify the number of days to exceed to clear the history, pass the option `--time=`. Valid values:
+
+```text
+<number><d|days|m|months|y|years>
+#Ex:
+7d|7days => 7 days
+1m|1months => 1 month
+1y|1years => 1 year
+```
+
+```bash
+php artisan historical-records:cleanup --time=14days
+#OR
+php artisan historical-records:cleanup -t 14d
+```
+
+## Configurations
+
+Configuration parameters will be stored in the file `config/historical-records.php`.
+
+### History retention period
+
+You can configure the history period for cleaning. By default, history will be stored within 90 days.
+
+```php
+return [
+    'history_expires' => 90, // days
+    ...
+];
+```
+
+### Names of devices that will save history
+
+You can configure device names to save history.
+
+```php
+return [
+    ...
+    'device_name' => [ // device name that will be saved
+        'phone' => 'phone',
+        'tablet' => 'tablet',
+        'desktop' => 'desktop',
+        'default' => 'unknown',
+    ],
+];
+```
