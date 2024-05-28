@@ -24,10 +24,10 @@ class HistoryRepository implements HistoryRepositoryContract
         $browser = Container::getInstance()->make('browser-detect')->detect();
 
         $device = match (true) {
-            $browser->isMobile() => 'phone',
-            $browser->isTablet() => 'tablet',
-            $browser->isDesktop() => 'desktop',
-            default => 'unknown',
+            $browser->isMobile() => Config::get('historical-records.device_name.phone', 'phone'),
+            $browser->isTablet() => Config::get('historical-records.device_name.tablet', 'tablet'),
+            $browser->isDesktop() => Config::get('historical-records.device_name.desktop', 'desktop'),
+            default => Config::get('historical-records.device_name.unknown', 'unknown'),
         };
 
         $payload = isset($payload) ? json_encode($payload) : null;
