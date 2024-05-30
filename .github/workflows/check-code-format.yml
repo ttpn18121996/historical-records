@@ -23,14 +23,13 @@ jobs:
         tools: composer:v2
         coverage: none
 
-    - name: "Install dependencies"
-      run: composer install --prefer-dist --no-progress
+    - name: "Install Pint"
+      run: composer global require laravel/pint
 
-    - name: "Check code format by laravel pint"
-      uses: aglipanci/laravel-pint-action@2.0.0
+    - name: "Run Pint"
+      run: pint src -v
+
+    - name: "Commit linted files"
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        preset: laravel
-        verboseMode: true
-        testMode: true
-        configPath: "./pint.json"
-        pintVersion: 1.15
+        commit_message: "Fixes coding style"
