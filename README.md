@@ -86,6 +86,81 @@ php artisan historical-records:cleanup --time=14days
 php artisan historical-records:cleanup -t 14d
 ```
 
+## Show user actions and locale
+
+We support 1 set of languages ​​to display user actions in the file `config/en/historical.php`.
+
+```php
+return [
+    'users' => [
+        'create' => [
+            'title' => 'Create',
+            'action' => '%s has created a user.',
+        ],
+        'update' => [
+            'title' => 'Update',
+            'action' => '%s has updated a user.',
+        ],
+        'delete' => [
+            'title' => 'Delete',
+            'action' => '%s has deleted a user.',
+        ],
+        'destroy' => [
+            'title' => 'Force delete',
+            'action' => '%s has hard deleted a user.',
+        ],
+        'restore' => [
+            'title' => 'Restore',
+            'action' => '%s has restored a user.',
+        ],
+        'login' => [
+            'title' => 'Login',
+            'action' => '%s has logged in.',
+        ],
+        'change_password' => [
+            'title' => 'Change password',
+            'action' => '%s has changed the login account password.',
+        ],
+        'update_profile' => [
+            'title' => 'Update profile',
+            'action' => '%s has updated the profile.',
+        ],
+        'email_verification' => [
+            'title' => 'Email verification',
+            'action' => '%s has verified the email.',
+        ],
+    ],
+];
+```
+
+The model supports user action methods. We can rely on the language file to display user actions.
+
+Suppose we have historical information
+
+```php
+/*
+User [
+    'id' => 1
+    'name' => 'John Doe'
+]
+History [
+    'table_name' => 'users',
+    'ketword' => 'create'
+    'user_id' => 1
+]
+*/
+$history = History::first();
+
+echo $history->action_for_trans;
+
+// historical.users.create.action
+// :name has created a user.
+
+__($history->action_for_trans, ['name' => $history->user->name]);
+
+// John Doe has created a user
+```
+
 ## Configurations
 
 Configuration parameters will be stored in the file `config/historical-records.php`.
