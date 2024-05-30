@@ -3,7 +3,6 @@
 namespace HistoricalRecords;
 
 use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
-use HistoricalRecords\HistoryRepository;
 use Illuminate\Support\ServiceProvider;
 
 class HistoricalRecordsServiceProvider extends ServiceProvider
