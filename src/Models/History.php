@@ -18,8 +18,6 @@ class History extends Model
 
     /**
      * Get the parent commentable model (post or video).
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function commentable(): MorphTo
     {
@@ -28,8 +26,6 @@ class History extends Model
 
     /**
      * Get the history's payload as an array.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function payloadArray(): Attribute
     {
@@ -40,8 +36,6 @@ class History extends Model
 
     /**
      * Get the history's information as an array.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function informationArray(): Attribute
     {
@@ -52,8 +46,6 @@ class History extends Model
 
     /**
      * Get the action content to display for humans.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function titleForTrans(): Attribute
     {
@@ -64,8 +56,6 @@ class History extends Model
 
     /**
      * Get the action content to display for humans.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function actionForTrans(): Attribute
     {

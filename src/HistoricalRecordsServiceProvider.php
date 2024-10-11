@@ -9,8 +9,6 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -21,8 +19,6 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -32,8 +28,6 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
 
     /**
      * Register the package's publishable resources.
-     *
-     * @return void
      */
     protected function registerPublishing(): void
     {
@@ -48,8 +42,6 @@ class HistoricalRecordsServiceProvider extends ServiceProvider
 
     /**
      * Register the Passport Artisan commands.
-     *
-     * @return void
      */
     protected function registerCommands(): void
     {

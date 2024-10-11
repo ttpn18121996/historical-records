@@ -14,8 +14,7 @@ class HistoryRepository implements HistoryRepositoryContract
 {
     public function __construct(
         protected History $history,
-    ) {
-    }
+    ) {}
 
     /**
      * Create history of user actions that affect the database.

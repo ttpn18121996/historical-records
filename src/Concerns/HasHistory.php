@@ -9,8 +9,6 @@ trait HasHistory
 {
     /**
      * Get all of the model's histories.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function histories(): MorphMany
     {

@@ -40,8 +40,6 @@ class HistoryCleanup extends Command
 
     /**
      * Get the storage time.
-     *
-     * @return \Illuminate\Support\Carbon
      */
     protected function getTime(): Carbon
     {
