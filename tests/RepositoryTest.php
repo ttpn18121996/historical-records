@@ -20,7 +20,7 @@ class RepositoryTest extends TestCase
 
         $history = $historyRepository->saveHistory($user, 'users', 'create', $newUser->toArray());
 
-        $this->assertEquals($history->table_name, 'users');
+        $this->assertEquals($history->feature, 'users');
         $this->assertEquals($history->keyword, 'create');
         $this->assertInstanceOf(History::class, $history);
     }

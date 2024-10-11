@@ -16,7 +16,7 @@ class CommandTest extends TestCase
     {
         $historyRepository = app(HistoryRepository::class);
         $user = User::factory()->create();
-        $history = $historyRepository->saveHistory($user->id, 'testing', 'test');
+        $history = $historyRepository->saveHistory($user, 'testing', 'test');
         $historyId = $history->id;
         $history->update(['created_at' => Carbon::now()->subDay()->subMinute()]);
 
@@ -32,7 +32,7 @@ class CommandTest extends TestCase
     {
         $historyRepository = app(HistoryRepository::class);
         $user = User::factory()->create();
-        $history = $historyRepository->saveHistory($user->id, 'testing', 'test');
+        $history = $historyRepository->saveHistory($user, 'testing', 'test');
         $historyId = $history->id;
         $history->update(['created_at' => Carbon::now()->{$method}($value)->subMinute()]);
 

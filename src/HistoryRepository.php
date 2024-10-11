@@ -5,6 +5,7 @@ namespace HistoricalRecords;
 use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
 use HistoricalRecords\Models\History;
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
@@ -19,12 +20,8 @@ class HistoryRepository implements HistoryRepositoryContract
     /**
      * Create history of user actions that affect the database.
      */
-    public function saveHistory(mixed $userId, string $tableName, string $keyword, ?array $payload = null): mixed
+    public function saveHistory(Model $historyable, string $feature, string $keyword, ?array $payload = null): ?History
     {
-        if (is_null($userId)) {
-            return null;
-        }
-
         $browser = Container::getInstance()->make('browser-detect')->detect();
 
         $device = match (true) {
@@ -44,14 +41,16 @@ class HistoryRepository implements HistoryRepositoryContract
             'platform_version' => $browser->platformVersion(),
         ];
 
-        return $this->history->create([
-            'user_id' => $this->resolveUser($userId)->id,
-            'table_name' => $tableName,
-            'keyword' => $keyword,
-            'payload' => $payload,
-            'information' => json_encode($information),
-            'ip_address' => Request::ip(),
-        ]);
+        $this->history->historyable_type = get_class($historyable);
+        $this->history->historyable_id = $historyable->id;
+        $this->history->feature = $feature;
+        $this->history->keyword = $keyword;
+        $this->history->payload = $payload;
+        $this->history->information = json_encode($information);
+        $this->history->ip_address = Request::ip();
+        $this->history->save();
+
+        return $this->history;
     }
 
     /**
@@ -62,21 +61,5 @@ class HistoryRepository implements HistoryRepositoryContract
         Artisan::call('historical-records:cleanup', [
             '--time' => "{$days}d",
         ]);
-    }
-
-    /**
-     * Resolve the user.
-     */
-    protected function resolveUser($userId): mixed
-    {
-        $guard = Config::get('auth.defaults.guard');
-        $provider = Config::get("auth.guards.{$guard}.provider");
-        $userModel = Config::get("auth.providers.{$provider}.model");
-
-        if ($userId instanceof $userModel) {
-            return $userId;
-        }
-
-        return Container::getInstance()->make($userModel)->find($userId);
     }
 }

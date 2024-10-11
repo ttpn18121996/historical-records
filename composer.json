@@ -26,7 +26,10 @@
         "psr-4": {
             "HistoricalRecords\\Tests\\": "tests/",
             "App\\": "workbench/app/",
-            "Database\\Factories\\": "workbench/database/factories/"
+            "Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "extra": {
@@ -60,7 +63,7 @@
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@build",
-            "@php vendor/bin/testbench serve"
+            "@php vendor/bin/testbench serve --ansi"
         ],
         "lint": [
             "@php vendor/bin/pint",

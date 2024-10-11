@@ -11,17 +11,39 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('histories', function (Blueprint $table) {
+        $tableName = config('historical-records.table_name');
+
+        Schema::create($tableName, function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable()->index();
-            $table->string('table_name')->comment('The name of the table in database');
-            $table->string('keyword')->comment('This keyword is used to display messages according to the key in the language file');
-            $table->json('payload')->nullable();
-            $table->json('information')
-                ->nullable()
+
+            $morphKeyYype = config('historical-records.morph_key_type', 'id');
+
+            if ($morphKeyYype === 'uuid') {
+                $table->uuidMorphs('historyable');
+            } elseif ($morphKeyYype === 'ulid') {
+                $table->ulidMorphs('historyable');
+            } else {
+                $table->numericMorphs('historyable');
+            }
+
+            $table->string('feature')
+                ->comment('The name of the feature');
+
+            $table->string('keyword')
+                ->comment('This keyword is used to display messages according to the key in the language file');
+
+            $table->longText('payload')
+                ->nullable();
+
+            $table->longText('information')
+                ->default('{"device":"Unknown"}')
                 ->comment('device, browser, browser_version, platform');
-            $table->ipAddress('ip_address')->default('127.0.0.1');
-            $table->timestamp('created_at')->nullable();
+
+            $table->ipAddress('ip_address')
+                ->default('127.0.0.1');
+
+            $table->timestamp('created_at')
+                ->nullable();
         });
     }
 

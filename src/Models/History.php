@@ -5,33 +5,31 @@ namespace HistoricalRecords\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Config;
 
 class History extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'table_name', 'keyword', 'payload', 'information', 'ip_address', 'created_at'];
-
     public $timestamps = false;
 
-    /**
-     * Get the user that owns the history.
-     */
-    public function user(): BelongsTo
-    {
-        $guard = Config::get('auth.defaults.guard');
-        $provider = $this->provider ?: Config::get("auth.guards.{$guard}.provider");
+    protected $guarded = [];
 
-        return $this->belongsTo(
-            Config::get("auth.providers.{$provider}.model"),
-        );
+    /**
+     * Get the parent commentable model (post or video).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function commentable(): MorphTo
+    {
+        return $this->morphTo();
     }
 
     /**
      * Get the history's payload as an array.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function payloadArray(): Attribute
     {
@@ -42,6 +40,8 @@ class History extends Model
 
     /**
      * Get the history's information as an array.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function informationArray(): Attribute
     {
@@ -52,31 +52,35 @@ class History extends Model
 
     /**
      * Get the action content to display for humans.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function titleForTrans(): Attribute
     {
         return Attribute::make(
-            get: fn () => 'historical.'.$this->table_name.'.'.$this->keyword.'.title',
+            get: fn () => 'historical.'.$this->feature.'.'.$this->keyword.'.title',
         );
     }
 
     /**
      * Get the action content to display for humans.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function actionForTrans(): Attribute
     {
         return Attribute::make(
-            get: fn () => 'historical.'.$this->table_name.'.'.$this->keyword.'.action',
+            get: fn () => 'historical.'.$this->feature.'.'.$this->keyword.'.action',
         );
     }
 
     /**
      * The "boot" method of the model.
+     *
+     * @return bool
      */
-    public static function boot()
+    public static function booted(): void
     {
-        parent::boot();
-
         static::creating(function (History $history) {
             $history->created_at = Carbon::now();
         });

@@ -22,6 +22,22 @@ Next, publish HistoricalRecords's resources using the `historical-records:instal
 php artisan historical-records:install
 ```
 
+## Basic usage
+
+First, add the HistoricalRecords\Concerns\HasHistory trait to your User model(s):
+
+```php
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use HistoricalRecords\Concerns\HasHistory;
+
+class User extends Authenticatable
+{
+    use HasHistory;
+
+    //...
+}
+```
+
 ## Save history
 
 ```php
@@ -34,13 +50,13 @@ $user = auth()->user();
 
 $historyRepository = app(\HistoricalRecords\Contracts\HistoryRepository::class);
 $history = $historyRepository->saveHistory(
-    userId: $user->id,
-    tableName: 'users',
+    historyable: $user,
+    feature: 'users',
     keyword: 'create',
     payload: ['id' => 2, 'name' => 'Minh Nguyet', 'email' => 'minhnguyet@example.com'],
 );
 
-echo sprintf(__('history.'.$history->table_name.'.'.$history->keyword.'.action'), $user->name);
+echo sprintf(__('history.'.$history->feature.'.'.$history->keyword.'.action'), $user->name);
 // Trinh Tran Phuong Nam has created a user.
 ```
 
@@ -144,7 +160,7 @@ User [
     'name' => 'John Doe'
 ]
 History [
-    'table_name' => 'users',
+    'feature' => 'users',
     'ketword' => 'create'
     'user_id' => 1
 ]
