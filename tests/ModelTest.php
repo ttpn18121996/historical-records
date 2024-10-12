@@ -17,7 +17,7 @@ class ModelTest extends TestCase
 
         $history = $historyRepository->saveHistory($user, 'users', 'login');
 
-        $this->assertEquals($user->id, $history->user_id);
+        $this->assertEquals($user->id, $history->historyable_id);
     }
 
     public function test_it_can_get_payload_array()

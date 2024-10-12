@@ -38,7 +38,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function defineEnvironment($app)
     {
-        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections.sqlite.database', __DIR__.'/../workbench/database/database.sqlite');
     }
 
     /**

@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use HistoricalRecords\Concerns\HasHistory;
 
 class User extends \Illuminate\Foundation\Auth\User
 {
-    use HasFactory;
+    use HasFactory, HasHistory;
 
     /**
      * The attributes that are mass assignable.

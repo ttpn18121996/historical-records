@@ -5,29 +5,21 @@ namespace HistoricalRecords\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Config;
 
 class History extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'table_name', 'keyword', 'payload', 'information', 'ip_address', 'created_at'];
-
     public $timestamps = false;
 
     /**
-     * Get the user that owns the history.
+     * Get the parent commentable model (post or video).
      */
-    public function user(): BelongsTo
+    public function commentable(): MorphTo
     {
-        $guard = Config::get('auth.defaults.guard');
-        $provider = $this->provider ?: Config::get("auth.guards.{$guard}.provider");
-
-        return $this->belongsTo(
-            Config::get("auth.providers.{$provider}.model"),
-        );
+        return $this->morphTo();
     }
 
     /**
@@ -56,7 +48,7 @@ class History extends Model
     public function titleForTrans(): Attribute
     {
         return Attribute::make(
-            get: fn () => 'historical.'.$this->table_name.'.'.$this->keyword.'.title',
+            get: fn () => 'historical.'.$this->feature.'.'.$this->keyword.'.title',
         );
     }
 
@@ -66,17 +58,17 @@ class History extends Model
     public function actionForTrans(): Attribute
     {
         return Attribute::make(
-            get: fn () => 'historical.'.$this->table_name.'.'.$this->keyword.'.action',
+            get: fn () => 'historical.'.$this->feature.'.'.$this->keyword.'.action',
         );
     }
 
     /**
      * The "boot" method of the model.
+     *
+     * @return bool
      */
-    public static function boot()
+    public static function booted(): void
     {
-        parent::boot();
-
         static::creating(function (History $history) {
             $history->created_at = Carbon::now();
         });

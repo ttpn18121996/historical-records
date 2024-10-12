@@ -16,9 +16,10 @@ class CommandTest extends TestCase
     {
         $historyRepository = app(HistoryRepository::class);
         $user = User::factory()->create();
-        $history = $historyRepository->saveHistory($user->id, 'testing', 'test');
+        $history = $historyRepository->saveHistory($user, 'testing', 'test');
         $historyId = $history->id;
-        $history->update(['created_at' => Carbon::now()->subDay()->subMinute()]);
+        $history->created_at = Carbon::now()->subDay()->subMinute();
+        $history->save();
 
         $historyRepository->cleanup(1);
 
@@ -32,9 +33,10 @@ class CommandTest extends TestCase
     {
         $historyRepository = app(HistoryRepository::class);
         $user = User::factory()->create();
-        $history = $historyRepository->saveHistory($user->id, 'testing', 'test');
+        $history = $historyRepository->saveHistory($user, 'testing', 'test');
         $historyId = $history->id;
-        $history->update(['created_at' => Carbon::now()->{$method}($value)->subMinute()]);
+        $history->created_at = Carbon::now()->{$method}($value)->subMinute();
+        $history->save();
 
         $this->artisan('historical-records:cleanup', ['--time' => $time]);
 

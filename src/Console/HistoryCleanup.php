@@ -26,6 +26,8 @@ class HistoryCleanup extends Command
 
     /**
      * Execute the console command.
+     *
+     * @return int
      */
     public function handle()
     {
@@ -39,7 +41,7 @@ class HistoryCleanup extends Command
     /**
      * Get the storage time.
      */
-    private function getTime(): Carbon
+    protected function getTime(): Carbon
     {
         if ($this->option('time') && preg_match('/^([0-9]+)([d,m,y,days,months,years]+)$/i', $this->option('time'), $matches)) {
             switch ($matches[2]) {
