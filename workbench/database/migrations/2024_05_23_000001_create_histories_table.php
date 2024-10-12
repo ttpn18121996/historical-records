@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -36,7 +37,7 @@ return new class extends Migration
                 ->nullable();
 
             $table->longText('information')
-                ->default('{"device":"Unknown"}')
+                ->default(new Expression('(JSON_ARRAY())'))
                 ->comment('device, browser, browser_version, platform');
 
             $table->ipAddress('ip_address')
