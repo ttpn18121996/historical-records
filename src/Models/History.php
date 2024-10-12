@@ -14,8 +14,6 @@ class History extends Model
 
     public $timestamps = false;
 
-    protected $guarded = [];
-
     /**
      * Get the parent commentable model (post or video).
      */
