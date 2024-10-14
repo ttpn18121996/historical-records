@@ -2,10 +2,10 @@
 
 namespace HistoricalRecords;
 
+use HistoricalRecords\Contracts\Historyable;
 use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
 use HistoricalRecords\Models\History;
 use Illuminate\Container\Container;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
@@ -19,8 +19,12 @@ class HistoryRepository implements HistoryRepositoryContract
     /**
      * Create history of user actions that affect the database.
      */
-    public function saveHistory(Model $historyable, string $feature, string $keyword, ?array $payload = null): ?History
-    {
+    public function saveHistory(
+        Historyable $historyable,
+        string $feature,
+        string $keyword,
+        ?array $payload = null
+    ): ?History {
         $browser = Container::getInstance()->make('browser-detect')->detect();
 
         $device = match (true) {
@@ -41,7 +45,7 @@ class HistoryRepository implements HistoryRepositoryContract
         ];
 
         $this->history->historyable_type = get_class($historyable);
-        $this->history->historyable_id = $historyable->id;
+        $this->history->historyable_id = $historyable->getKey();
         $this->history->feature = $feature;
         $this->history->keyword = $keyword;
         $this->history->payload = $payload;

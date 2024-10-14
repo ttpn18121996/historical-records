@@ -15,9 +15,9 @@ class History extends Model
     public $timestamps = false;
 
     /**
-     * Get the parent commentable model (post or video).
+     * Get the parent historyable model.
      */
-    public function commentable(): MorphTo
+    public function historyable(): MorphTo
     {
         return $this->morphTo();
     }
