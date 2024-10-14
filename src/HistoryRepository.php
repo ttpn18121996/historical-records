@@ -23,7 +23,7 @@ class HistoryRepository implements HistoryRepositoryContract
         Historyable $historyable,
         string $feature,
         string $keyword,
-        ?array $payload = null
+        ?array $payload = null,
     ): ?History {
         $browser = Container::getInstance()->make('browser-detect')->detect();
 

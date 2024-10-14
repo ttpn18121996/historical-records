@@ -13,7 +13,7 @@ interface HistoryRepository
         Historyable $historyable,
         string $feature,
         string $keyword,
-        ?array $payload = null
+        ?array $payload = null,
     ): ?History;
 
     /**
