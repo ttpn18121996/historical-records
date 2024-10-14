@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HistoricalRecords\Concerns\HasHistory;
+use HistoricalRecords\Contracts\Historyable;
 
-class User extends \Illuminate\Foundation\Auth\User
+class User extends \Illuminate\Foundation\Auth\User implements Historyable
 {
     use HasFactory, HasHistory;
 
