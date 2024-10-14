@@ -29,8 +29,9 @@ First, add the HistoricalRecords\Concerns\HasHistory trait to your User model(s)
 ```php
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use HistoricalRecords\Concerns\HasHistory;
+use HistoricalRecords\Contracts\Historyable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Historyable
 {
     use HasHistory;
 
