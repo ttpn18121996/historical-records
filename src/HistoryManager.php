@@ -47,7 +47,7 @@ class HistoryManager
         ];
 
         $model = static::model();
-        
+
         $model->historyable_type = get_class($historyable);
         $model->historyable_id = $historyable->getKey();
         $model->feature = $feature;
