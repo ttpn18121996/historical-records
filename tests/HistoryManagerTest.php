@@ -3,22 +3,21 @@
 namespace HistoricalRecords\Tests;
 
 use App\Models\User;
-use HistoricalRecords\Contracts\HistoryRepository;
+use HistoricalRecords\HistoryManager;
 use HistoricalRecords\Models\History;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class RepositoryTest extends TestCase
+class HistoryManagerTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_it_can_save_history()
     {
         $user = User::factory()->create();
-        $historyRepository = app(HistoryRepository::class);
 
         $newUser = User::factory()->create();
 
-        $history = $historyRepository->saveHistory($user, 'users', 'create', $newUser->toArray());
+        $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
 
         $this->assertEquals($history->table_name, 'users');
         $this->assertEquals($history->keyword, 'create');

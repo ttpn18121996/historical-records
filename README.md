@@ -8,6 +8,10 @@ Record the history of activities affecting the database in a simple way.
 
 [`Laravel v11.x`](https://github.com/laravel/laravel)
 
+## Content
+
+- [Installation](#installation)
+
 ## Installation
 
 Install using composer:
@@ -25,6 +29,9 @@ php artisan historical-records:install
 ## Save history
 
 ```php
+
+use HistoricalRecords\HistoryManager;
+
 /*
 id: 1
 name: Trinh Tran Phuong Nam
@@ -32,8 +39,7 @@ email: ttpn18121996@example.com
 */
 $user = auth()->user();
 
-$historyRepository = app(\HistoricalRecords\Contracts\HistoryRepository::class);
-$history = $historyRepository->saveHistory(
+$history = HistoryManager::save(
     userId: $user->id,
     tableName: 'users',
     keyword: 'create',
@@ -44,18 +50,18 @@ echo sprintf(__('history.'.$history->table_name.'.'.$history->keyword.'.action')
 // Trinh Tran Phuong Nam has created a user.
 ```
 
-## Override the HistoryRepository
+## The model configuration used for the HistoryManager
 
 ```php
-use App\Repositories\HistoryRepository;
-use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
+use App\Models\History;
+use HistoricalRecords\HistoryManager;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(HistoryRepositoryContract::class, HistoryRepository::class);
+        HistoryManager::$modelName = History::class;
     }
 }
 ```
