@@ -8,6 +8,18 @@ Record the history of activities affecting the database in a simple way.
 
 [`Laravel v11.x`](https://github.com/laravel/laravel)
 
+## Content
+
+- [Installation](#installation)
+- [Basic usage](#basic-usage)
+- [Save history](#save-history)
+- [The model configuration used for the HistoryManager](#the-model-configuration-used-for-the-historymanager)
+- [History cleanup](#history-cleanup)
+- [Show user actions and locale](#show-user-actions-and-locale)
+- [Configurations](#configurations)
+  - [History retention period](#history-retention-period)
+  - [Names of devices that will save history](#names-of-devices-that-will-save-history)
+
 ## Installation
 
 Install using composer:
@@ -42,6 +54,9 @@ class User extends Authenticatable implements Historyable
 ## Save history
 
 ```php
+
+use HistoricalRecords\HistoryManager;
+
 /*
 id: 1
 name: Trinh Tran Phuong Nam
@@ -49,8 +64,7 @@ email: ttpn18121996@example.com
 */
 $user = auth()->user();
 
-$historyRepository = app(\HistoricalRecords\Contracts\HistoryRepository::class);
-$history = $historyRepository->saveHistory(
+$history = HistoryManager::save(
     historyable: $user,
     feature: 'users',
     keyword: 'create',
@@ -61,18 +75,18 @@ echo sprintf(__('history.'.$history->feature.'.'.$history->keyword.'.action'), $
 // Trinh Tran Phuong Nam has created a user.
 ```
 
-## Override the HistoryRepository
+## The model configuration used for the HistoryManager
 
 ```php
-use App\Repositories\HistoryRepository;
-use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
+use App\Models\History;
+use HistoricalRecords\HistoryManager;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(HistoryRepositoryContract::class, HistoryRepository::class);
+        HistoryManager::$modelName = History::class;
     }
 }
 ```
@@ -163,7 +177,8 @@ User [
 History [
     'feature' => 'users',
     'ketword' => 'create'
-    'user_id' => 1
+    'historyable_id' => 1,
+    'historyable_type' => App\Models\User,
 ]
 */
 $history = History::first();

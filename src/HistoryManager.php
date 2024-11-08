@@ -3,26 +3,25 @@
 namespace HistoricalRecords;
 
 use HistoricalRecords\Contracts\Historyable;
-use HistoricalRecords\Contracts\HistoryRepository as HistoryRepositoryContract;
 use HistoricalRecords\Models\History;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 
-/**
- * @deprecated use \HistoricalRecords\HistoryManager instead of HistoryRepository
- */
-class HistoryRepository implements HistoryRepositoryContract
+class HistoryManager
 {
-    public function __construct(
-        protected History $history,
-    ) {}
+    public static string $modelName;
+
+    public static function model()
+    {
+        return Container::getInstance()->make(static::$modelName ?? History::class);
+    }
 
     /**
      * Create history of user actions that affect the database.
      */
-    public function saveHistory(
+    public static function save(
         Historyable $historyable,
         string $feature,
         string $keyword,
@@ -47,22 +46,24 @@ class HistoryRepository implements HistoryRepositoryContract
             'platform_version' => $browser->platformVersion(),
         ];
 
-        $this->history->historyable_type = get_class($historyable);
-        $this->history->historyable_id = $historyable->getKey();
-        $this->history->feature = $feature;
-        $this->history->keyword = $keyword;
-        $this->history->payload = $payload;
-        $this->history->information = json_encode($information);
-        $this->history->ip_address = Request::ip();
-        $this->history->save();
+        $model = static::model();
 
-        return $this->history;
+        $model->historyable_type = get_class($historyable);
+        $model->historyable_id = $historyable->getKey();
+        $model->feature = $feature;
+        $model->keyword = $keyword;
+        $model->payload = $payload;
+        $model->information = json_encode($information);
+        $model->ip_address = Request::ip();
+        $model->save();
+
+        return $model;
     }
 
     /**
      * Clean up history.
      */
-    public function cleanup(int $days = 90): void
+    public static function cleanup(int $days = 90): void
     {
         Artisan::call('historical-records:cleanup', [
             '--time' => "{$days}d",

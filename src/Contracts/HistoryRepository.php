@@ -4,6 +4,9 @@ namespace HistoricalRecords\Contracts;
 
 use HistoricalRecords\Models\History;
 
+/**
+ * @deprecated use \HistoricalRecords\HistoryManager instead of HistoryRepository
+ */
 interface HistoryRepository
 {
     /**
