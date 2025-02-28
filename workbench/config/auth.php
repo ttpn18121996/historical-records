@@ -4,7 +4,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => Workbench\App\Models\User::class,
         ],
     ],
 ];

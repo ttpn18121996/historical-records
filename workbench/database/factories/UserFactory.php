@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Factories;
+namespace Workbench\Database\Factories;
 
-use App\Models\User;
+use Workbench\App\Models\User;
 
 /**
- * @template TModel of \App\Models\User
+ * @template TModel of \Workbench\App\Models\User
  *
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<TModel>
  */

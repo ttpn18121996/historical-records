@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories;
+namespace Workbench\Database\Factories;
 
-use App\Models\History;
+use Workbench\App\Models\History;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HistoryFactory extends Factory

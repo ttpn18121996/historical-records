@@ -2,11 +2,11 @@
 
 namespace HistoricalRecords\Tests;
 
-use App\Models\History;
-use App\Models\User;
 use HistoricalRecords\HistoryManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Workbench\App\Models\History;
+use Workbench\App\Models\User;
 
 class CommandTest extends TestCase
 {
@@ -14,7 +14,7 @@ class CommandTest extends TestCase
 
     public function test_it_can_be_clean_up_the_history()
     {
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $user = User::factory()->create();
         $history = HistoryManager::save($user, 'testing', 'test');
         $historyId = $history->id;
@@ -31,7 +31,7 @@ class CommandTest extends TestCase
      */
     public function test_it_can_be_clean_up_the_history_with_time_options(string $time, string $method, int $value)
     {
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $user = User::factory()->create();
         $history = HistoryManager::save($user, 'testing', 'test');
         $historyId = $history->id;

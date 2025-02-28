@@ -11,11 +11,27 @@ use Illuminate\Support\Facades\Request;
 
 class HistoryManager
 {
+    /**
+     * @var class-string<TClass>
+     */
     public static string $modelName;
 
+    /**
+     * Get the model used for history.
+     */
     public static function model()
     {
         return Container::getInstance()->make(static::$modelName ?? History::class);
+    }
+
+    /**
+     * Set the model used for history.
+     *
+     * @param  string|class-string<TClass>  $modelName
+     */
+    public static function useModel($modelName)
+    {
+        static::$modelName = $modelName;
     }
 
     /**

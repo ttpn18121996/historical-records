@@ -2,7 +2,7 @@
 
 namespace HistoricalRecords\Tests;
 
-use App\Models\User;
+use Workbench\App\Models\User;
 use HistoricalRecords\HistoryManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -12,7 +12,7 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_user_information()
     {
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $user = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'login');
@@ -22,10 +22,10 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_payload_array()
     {
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $user = User::factory()->create();
 
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $newUser = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
@@ -36,10 +36,10 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_information_array()
     {
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $user = User::factory()->create();
 
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $newUser = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
@@ -50,10 +50,10 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_info_for_trans()
     {
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $user = User::factory()->create(['name' => 'AAA']);
 
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $newUser = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
