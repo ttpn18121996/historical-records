@@ -86,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        HistoryManager::$modelName = History::class;
+        HistoryManager::useModel(History::class);
     }
 }
 ```

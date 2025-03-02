@@ -2,10 +2,10 @@
 
 namespace HistoricalRecords\Tests;
 
-use App\Models\User;
 use HistoricalRecords\HistoryManager;
-use HistoricalRecords\Models\History;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Workbench\App\Models\History;
+use Workbench\App\Models\User;
 
 class HistoryManagerTest extends TestCase
 {
@@ -13,12 +13,13 @@ class HistoryManagerTest extends TestCase
 
     public function test_it_can_save_history()
     {
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $user = User::factory()->create();
 
-        /** @var \App\Models\User */
+        /** @var \Workbench\App\Models\User */
         $newUser = User::factory()->create();
 
+        HistoryManager::useModel(History::class);
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
 
         $this->assertEquals($history->feature, 'users');

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace Workbench\App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HistoricalRecords\Concerns\HasHistory;
 use HistoricalRecords\Contracts\Historyable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Workbench\Database\Factories\UserFactory;
 
 class User extends \Illuminate\Foundation\Auth\User implements Historyable
 {
@@ -30,4 +31,9 @@ class User extends \Illuminate\Foundation\Auth\User implements Historyable
         'password',
         'remember_token',
     ];
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
 }
