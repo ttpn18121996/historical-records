@@ -2,8 +2,8 @@
 
 namespace Workbench\Database\Factories;
 
-use Workbench\App\Models\History;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Workbench\App\Models\History;
 
 class HistoryFactory extends Factory
 {

@@ -2,9 +2,9 @@
 
 namespace HistoricalRecords\Tests;
 
-use Workbench\App\Models\User;
 use HistoricalRecords\HistoryManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Workbench\App\Models\User;
 
 class ModelTest extends TestCase
 {

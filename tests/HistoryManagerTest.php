@@ -3,9 +3,9 @@
 namespace HistoricalRecords\Tests;
 
 use HistoricalRecords\HistoryManager;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Workbench\App\Models\History;
 use Workbench\App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HistoryManagerTest extends TestCase
 {
