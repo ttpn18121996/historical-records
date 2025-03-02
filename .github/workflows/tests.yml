@@ -8,24 +8,20 @@ on:
   pull_request:
 
 jobs:
-  test_features:
-
+  ci:
     runs-on: ubuntu-latest
 
     steps:
-    - name: "Checkout the code"
+    - name: "Checkout"
       uses: actions/checkout@v4
 
     - name: "Setup PHP"
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.3'
+        php-version: '8.4'
         tools: composer:v2
         coverage: xdebug
         extensions: dom, curl, libxml, mbstring, zip, xdebug
-
-    - name: "Install dependencies"
-      run: composer install --prefer-dist --no-progress
 
     - name: "Setup PHPUnit environment"
       run: cp phpunit.xml.dist phpunit.xml && cp workbench/.env.example workbench/.env && touch workbench/database/database.sqlite
