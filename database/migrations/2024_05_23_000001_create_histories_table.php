@@ -17,14 +17,16 @@ return new class extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $morphKeyYype = config('historical-records.morph_key_type', 'id');
+            $morphKeyType = config('historical-records.morph_key_type', 'id');
 
-            if ($morphKeyYype === 'uuid') {
-                $table->uuidMorphs('historyable');
-            } elseif ($morphKeyYype === 'ulid') {
-                $table->ulidMorphs('historyable');
+            $morphKey = 'historyable';
+
+            if ($morphKeyType === 'uuid') {
+                $table->uuidMorphs($morphKey);
+            } elseif ($morphKeyType === 'ulid') {
+                $table->ulidMorphs($morphKey);
             } else {
-                $table->numericMorphs('historyable');
+                $table->numericMorphs($morphKey);
             }
 
             $table->string('feature')

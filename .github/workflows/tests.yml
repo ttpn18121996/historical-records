@@ -26,8 +26,5 @@ jobs:
     - name: "Install dependencies"
       run: composer install --prefer-dist --no-progress
 
-    - name: "Setup PHPUnit environment"
-      run: cp phpunit.xml.dist phpunit.xml && cp workbench/.env.example workbench/.env && touch workbench/database/database.sqlite
-
     - name: "Run PHPUnit tests"
       run: vendor/bin/phpunit --display-warnings

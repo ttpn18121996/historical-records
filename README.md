@@ -119,7 +119,7 @@ php artisan historical-records:cleanup -t 14d
 
 ## Show user actions and locale
 
-We support 1 set of languages ​​to display user actions in the file `config/en/historical.php`.
+We support 1 set of languages ​​to display user actions in the file `lang/en/historical.php`.
 
 ```php
 return [
