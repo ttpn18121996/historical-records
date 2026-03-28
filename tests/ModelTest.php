@@ -25,7 +25,7 @@ class ModelTest extends TestCase
         /** @var \Workbench\App\Models\User */
         $user = User::factory()->create();
 
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $newUser = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
