@@ -12,7 +12,7 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_user_information()
     {
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $user = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'login');
@@ -22,10 +22,10 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_payload_array()
     {
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $user = User::factory()->create();
 
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $newUser = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
@@ -36,10 +36,10 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_information_array()
     {
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $user = User::factory()->create();
 
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $newUser = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());
@@ -50,10 +50,10 @@ class ModelTest extends TestCase
 
     public function test_it_can_get_info_for_trans()
     {
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $user = User::factory()->create(['name' => 'AAA']);
 
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $newUser = User::factory()->create();
 
         $history = HistoryManager::save($user, 'users', 'create', $newUser->toArray());

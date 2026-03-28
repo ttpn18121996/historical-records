@@ -4,6 +4,7 @@ namespace HistoricalRecords\Tests;
 
 use hisorange\BrowserDetect\ServiceProvider as BrowserDetectServiceProvider;
 use HistoricalRecords\HistoricalRecordsServiceProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 
 use function Orchestra\Testbench\artisan;
@@ -33,7 +34,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     protected function defineEnvironment($app)
@@ -45,7 +46,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Register the service.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageProviders($app)

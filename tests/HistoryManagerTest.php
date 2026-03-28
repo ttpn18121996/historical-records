@@ -13,10 +13,10 @@ class HistoryManagerTest extends TestCase
 
     public function test_it_can_save_history()
     {
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $user = User::factory()->create();
 
-        /** @var \Workbench\App\Models\User */
+        /** @var User */
         $newUser = User::factory()->create();
 
         HistoryManager::useModel(History::class);
