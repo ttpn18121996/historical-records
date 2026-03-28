@@ -1,12 +1,10 @@
 <?php
 
-use Workbench\App\Models\User;
-
 return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => User::class,
+            'model' => \Workbench\App\Models\User::class,
         ],
     ],
 ];
